@@ -2,6 +2,7 @@
 include '../app/configuracao.php';
 include '../app/Libraries/Rota.php';
 include '../app/Libraries/Controller.php';
+include '../app/Libraries/Database.php';
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +11,7 @@ include '../app/Libraries/Controller.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= APP_NAME ?></title>
+    <title><?= APP_NOME ?></title>
     <!-- BOOTSTRAP CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- MINHA FOLHA DE ESTILO CSS -->
@@ -19,6 +20,7 @@ include '../app/Libraries/Controller.php';
 <body>
 
     <?php 
+        $db = new Database;
         include_once('../app/Views/topo.php');
         $rotas = new Rota();
         include_once('../app/Views/rodape.php');
