@@ -4,20 +4,27 @@ include '../app/Libraries/Rota.php';
 include '../app/Libraries/Controller.php';
 include '../app/Libraries/Database.php';
 
+date_default_timezone_set('America/Sao_Paulo');
+
 $db = new Database;
 
-$usuarioId = 8;
-$titulo = 'Título do Post 2';
-$texto = 'Texto do Post 2';
+$id = 3;
+$usuarioId = 7;
+$titulo = 'Título do Post alterado';
+$texto = 'Texto do Post alterado';
+$criado_em = date('Y-m-d H:i:s');
 
-$db->query("INSERT INTO posts SET usuario_id = :usuario_id, titulo = :titulo, texto = :texto");
+$db->query("UPDATE posts SET usuario_id = :usuario_id, titulo = :titulo, texto = :texto, criado_em = :criado_em WHERE id = :id");
+
 $db->bind("usuario_id", $usuarioId);
 $db->bind("titulo", $titulo);
 $db->bind("texto", $texto);
+$db->bind("criado_em", $criado_em);
+$db->bind("id", $id);
 $db->executa();
 
 echo '<hr>Total Resultados: '.$db->totalResultados();
-echo '<hr>Último Registro Inserido: '.$db->ultimoIdInserido();
+// echo '<hr>Último Registro Inserido: '.$db->ultimoIdInserido();
 
 ?>
 
