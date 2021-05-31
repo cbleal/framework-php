@@ -1,2 +1,2 @@
-<h1>HOME</h1>
-<p><?= $dados['tituloPagina'] ?></p>
+<h1><?= $dados['tituloPagina'] ?></h1>
+<p><?= APP ?></p>
