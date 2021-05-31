@@ -1,9 +1,14 @@
 <?php
 
-class Paginas
+class Paginas extends Controller
 {
-    public function sobre($id)
+    public function index()
     {
-        echo $id.'<hr>';
+        # code...
+    }
+    
+    public function sobre()
+    {
+       
     }
 }
