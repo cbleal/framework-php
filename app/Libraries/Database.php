@@ -58,11 +58,13 @@ class Database
 
     public function resultado()
     {
+        $this->executa();
         return $this->stmt->fetch(PDO::FETCH_OBJ);
     }
 
     public function resultados()
     {
+        $this->executa();
         return $this->stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
@@ -73,6 +75,6 @@ class Database
 
     public function ultimoIdInserido()
     {
-        return $this->stmt->lastInsertId();
+        return $this->dbh->lastInsertId();
     }
 }

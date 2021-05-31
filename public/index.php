@@ -3,6 +3,22 @@ include '../app/configuracao.php';
 include '../app/Libraries/Rota.php';
 include '../app/Libraries/Controller.php';
 include '../app/Libraries/Database.php';
+
+$db = new Database;
+
+$usuarioId = 8;
+$titulo = 'Título do Post 2';
+$texto = 'Texto do Post 2';
+
+$db->query("INSERT INTO posts SET usuario_id = :usuario_id, titulo = :titulo, texto = :texto");
+$db->bind("usuario_id", $usuarioId);
+$db->bind("titulo", $titulo);
+$db->bind("texto", $texto);
+$db->executa();
+
+echo '<hr>Total Resultados: '.$db->totalResultados();
+echo '<hr>Último Registro Inserido: '.$db->ultimoIdInserido();
+
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +36,6 @@ include '../app/Libraries/Database.php';
 <body>
 
     <?php 
-        $db = new Database;
         include_once('../app/Views/topo.php');
         $rotas = new Rota();
         include_once('../app/Views/rodape.php');
