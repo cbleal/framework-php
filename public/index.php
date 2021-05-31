@@ -19,7 +19,9 @@ include '../app/Libraries/Controller.php';
 <body>
 
     <?php 
+        include_once('../app/Views/topo.php');
         $rotas = new Rota();
+        include_once('../app/Views/rodape.php');
     ?>
     
     <!-- JQUERY JS -->
