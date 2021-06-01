@@ -1,21 +1,9 @@
 <?php 
+include '../app/autoload.php';
 include '../app/configuracao.php';
-include '../app/Libraries/Rota.php';
-include '../app/Libraries/Controller.php';
-include '../app/Libraries/Database.php';
-
-date_default_timezone_set('America/Sao_Paulo');
-
-$db = new Database;
-
-$db->query("SELECT * FROM posts ORDER BY id DESC");
-
-foreach ($db->resultados() as $post) {
-    echo $post->id.' - '.$post->titulo.'<br>';
-}
-
-echo '<hr>Total Resultados: '.$db->totalResultados();
-// echo '<hr>Último Registro Inserido: '.$db->ultimoIdInserido();
+// include '../app/Libraries/Rota.php';
+// include '../app/Libraries/Controller.php';
+// include '../app/Libraries/Database.php';
 
 ?>
 
