@@ -8,18 +8,10 @@ date_default_timezone_set('America/Sao_Paulo');
 
 $db = new Database;
 
-$id = 3;
-$usuarioId = 7;
-$titulo = 'Título do Post alterado';
-$texto = 'Texto do Post alterado';
-$criado_em = date('Y-m-d H:i:s');
+$id = 4;
 
-$db->query("UPDATE posts SET usuario_id = :usuario_id, titulo = :titulo, texto = :texto, criado_em = :criado_em WHERE id = :id");
+$db->query("DELETE FROM posts WHERE id = :id");
 
-$db->bind("usuario_id", $usuarioId);
-$db->bind("titulo", $titulo);
-$db->bind("texto", $texto);
-$db->bind("criado_em", $criado_em);
 $db->bind("id", $id);
 $db->executa();
 
