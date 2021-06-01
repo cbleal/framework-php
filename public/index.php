@@ -8,12 +8,11 @@ date_default_timezone_set('America/Sao_Paulo');
 
 $db = new Database;
 
-$id = 4;
+$db->query("SELECT * FROM posts ORDER BY id DESC");
 
-$db->query("DELETE FROM posts WHERE id = :id");
-
-$db->bind("id", $id);
-$db->executa();
+foreach ($db->resultados() as $post) {
+    echo $post->id.' - '.$post->titulo.'<br>';
+}
 
 echo '<hr>Total Resultados: '.$db->totalResultados();
 // echo '<hr>Último Registro Inserido: '.$db->ultimoIdInserido();
