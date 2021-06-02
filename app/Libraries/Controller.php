@@ -5,7 +5,7 @@ class Controller
     public function model($model)
     {
         require_once '../app/Models/'.$model.'.php';
-        return $model;
+        return new $model;
     }
 
     public function view($view, $dados = [])

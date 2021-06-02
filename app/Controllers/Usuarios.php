@@ -2,8 +2,17 @@
 
 class Usuarios extends Controller
 {
+    // private $usuarioModel;
+
+    public function __construct()
+    {
+        # carrega o model Usuario
+        $this->usuarioModel = $this->model('Usuario');
+    }
+
     public function cadastrar()
     {
+
         $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
         if (isset($formulario)):
@@ -46,7 +55,14 @@ class Usuarios extends Controller
                         $dados['confirma_senha_erro'] = 'As senhas são diferentes';
                 # se tudo estiver correto o formulário foi validado com sucesso
                 else:
-                    echo 'Pode cadastrar os dados<hr>';
+                    # cria o hash para senha
+                    $dados['senha'] = password_hash($formulario['senha'], PASSWORD_DEFAULT);
+                    # chama o metodo para armazenar no banco de dados
+                    if ($this->usuarioModel->armazenar($dados)):
+                        echo 'Cadastrado com sucesso.<hr>';
+                    else:
+                        echo 'Erro ao cadastrar.<hr>';
+                    endif;                    
                 endif;
             endif;
 
