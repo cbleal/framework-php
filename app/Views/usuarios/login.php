@@ -2,19 +2,12 @@
     <div class="col-xl-4 col-md-6 mx-auto p-5">
         <div class="card">
             <div class="card-header bg-secondary text-white">
-                <h3>Cadastre-se</h3>
+                <h3>Login</h3>
             </div>
             <div class="card-body">
-                <p class="card-text"><small class="text-muted">Preencha o formulário abaixo para fazer seu cadastro</small></p>
+                <p class="card-text"><small class="text-muted">Informe os seus dados para fazer Login</small></p>
 
                 <form name="cadastrar" method="POST" action="" class="mt-4">
-                    <div class="mb-2">
-                        <label for="nome">Nome: <sup class="text-danger">*</sup></label>
-                        <input type="text" name="nome" id="nome" value="<?= $dados['nome'] ?>" class="form-control <?= $dados['nome_erro'] ? 'is-invalid' : '' ?>">
-                        <div class="invalid-feedback">
-                            <?= $dados['nome_erro'] ?>
-                        </div>
-                    </div>
                     <div class="mb-2">
                         <label for="email">E-mail: <sup class="text-danger">*</sup></label>
                         <input type="text" name="email" id="email" value="<?= $dados['email'] ?>" class="form-control <?= $dados['email_erro'] ? 'is-invalid' : '' ?>">
@@ -28,21 +21,14 @@
                         <div class="invalid-feedback">
                             <?= $dados['senha_erro'] ?>
                         </div>
-                    </div>
-                    <div class="mb-2">
-                        <label for="confirma_senha">Confirme a Senha: <sup class="text-danger">*</sup></label>
-                        <input type="password" name="confirma_senha" id="confirma_senha" value="<?= $dados['confirma_senha'] ?>" class="form-control <?= $dados['confirma_senha_erro'] ? 'is-invalid' : '' ?>">
-                        <div class="invalid-feedback">
-                            <?= $dados['confirma_senha_erro'] ?>
-                        </div>
-                    </div>
+                    </div>             
 
                     <div class="row">
                         <div class="d-grid gap-2">
-                            <input type="submit" value="Cadastrar" class="btn btn-info btn-block">
+                            <input type="submit" value="Entrar" class="btn btn-info">
                         </div>
-                        <div class="col">
-                            <small><a href="<?= URL ?>/usuarios/login">Você tem uma conta? Faça login</a></small>
+                        <div class="col-md-6">
+                            <small><a href="<?= URL ?>/usuarios/cadastrar">Não tem uma conta? Cadastre-se</a></small>
                         </div>
                     </div>
                 </form>
