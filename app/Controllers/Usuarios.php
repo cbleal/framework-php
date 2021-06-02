@@ -32,10 +32,13 @@ class Usuarios extends Controller
                 endif;            
             # se os campos estiverem todos preenchidos, seguem para outras validações
             else:
-                # se o nome tiver números
-                if (!ctype_alpha($formulario['nome'])):
-                    $dados['nome_erro'] = 'O nome não deve ter números';
-                # se o email tiver menos de 6 caracteres
+                # se o nome não possuir caracteres não alfanumericos
+                if (Checa::checarNome($formulario['nome'])):
+                    $dados['nome_erro'] = 'O nome informado é inválido';
+                # se o email for válido
+                elseif (Checa::checarEmail($formulario['email'])):
+                    $dados['email_erro'] = 'O email informado é inválido';
+                # se a senha tiver menos de 6 caracteres
                 elseif (strlen($formulario['senha']) < 6):
                     $dados['senha_erro'] = 'A senha deve ter no minimo 6 caracteres';
                 # se os campos senha e confirma senha forem diferentes
