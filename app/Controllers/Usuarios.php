@@ -115,7 +115,11 @@ class Usuarios extends Controller
                 if (Checa::checarEmail($formulario['email'])) :
                     $dados['email_erro'] = 'O email informado é inválido';
                 else :
-                    echo 'Login efetuado com sucesso.';
+                    if ($this->usuarioModel->checarLogin($formulario['email'], $formulario['senha'])):
+                        echo 'Login efetuado com sucesso.';
+                    else:
+                        echo 'E-mail e/ou senha inválidos.';
+                    endif;
                 endif;
             endif;
 

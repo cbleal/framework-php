@@ -12,9 +12,26 @@ class Usuario
     }
 
     //===============================================================
+    public function checarLogin($email, $senha)
+    {
+        $this->db->query("SELECT email, senha FROM usuarios WHERE email = :email");
+        $this->db->bind("email", $email);
+        if ($this->db->resultado()):
+            $resultado = $this->db->resultado();
+            # checar a senha
+            if (password_verify($senha, $resultado->senha)):
+                return true;
+            else:
+                return false;
+            endif;
+        else:
+            return false;
+        endif;
+    }
+    //===============================================================
     public function checarEmailExiste($email)
     {
-        $this->db->query("SELECT * FROM usuarios WHERE email = :email");
+        $this->db->query("SELECT email FROM usuarios WHERE email = :email");
         $this->db->bind("email", $email);
         if ($this->db->resultado()):
             return true;
