@@ -47,6 +47,9 @@ class Usuarios extends Controller
                 # se o email for válido
                 elseif (Checa::checarEmail($formulario['email'])):
                     $dados['email_erro'] = 'O email informado é inválido';
+                # se o email já existir no banco de dados
+                elseif ($this->usuarioModel->checarEmailExiste($formulario['email'])):
+                    $dados['email_erro'] = 'O email informado já existe';
                 # se a senha tiver menos de 6 caracteres
                 elseif (strlen($formulario['senha']) < 6):
                     $dados['senha_erro'] = 'A senha deve ter no minimo 6 caracteres';

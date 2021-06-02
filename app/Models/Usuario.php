@@ -12,6 +12,18 @@ class Usuario
     }
 
     //===============================================================
+    public function checarEmailExiste($email)
+    {
+        $this->db->query("SELECT * FROM usuarios WHERE email = :email");
+        $this->db->bind("email", $email);
+        if ($this->db->resultado()):
+            return true;
+        else:
+            return false;
+        endif;
+    }
+
+    //===============================================================
     public function armazenar($dados)
     {
         $this->db->query("INSERT INTO usuarios SET nome = :nome, email = :email, senha = :senha");
