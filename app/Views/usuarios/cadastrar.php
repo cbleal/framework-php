@@ -38,10 +38,10 @@
                     </div>
 
                     <div class="row">
-                        <div class="d-grid gap-2">
+                        <div class="col-md-6 d-grid gap-2">
                             <input type="submit" value="Cadastrar" class="btn btn-info btn-block">
                         </div>
-                        <div class="col">
+                        <div class="col-md-6">
                             <small><a href="<?= URL ?>/usuarios/login">Você tem uma conta? Faça login</a></small>
                         </div>
                     </div>

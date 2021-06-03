@@ -62,7 +62,8 @@ class Usuarios extends Controller
                     $dados['senha'] = password_hash($formulario['senha'], PASSWORD_DEFAULT);
                     # chama o metodo para armazenar no banco de dados
                     if ($this->usuarioModel->armazenar($dados)) :
-                        echo 'Cadastrado com sucesso.<hr>';
+                        Sessao::alerta('usuario', 'Cadastrado com sucesso');
+                        Url::redirecionar('usuarios/login');
                     else :
                         die('Erro ao cadastrar.<hr>');
                     endif;
@@ -150,6 +151,8 @@ class Usuarios extends Controller
         $_SESSION['usuario_id'] = $usuario->id;
         $_SESSION['usuario_nome'] = $usuario->nome;
         $_SESSION['usuario_email'] = $usuario->email;
+
+        Url::redirecionar('paginas/home');
     }
 
     //===============================================================
@@ -161,6 +164,6 @@ class Usuarios extends Controller
 
         session_destroy();
 
-        header('Location: '.URL);
+        Url::redirecionar('usuarios/login');
     }
 }
