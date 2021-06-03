@@ -1,6 +1,11 @@
 <?php 
+
+session_start();
+
 include '../app/autoload.php';
 include '../app/configuracao.php';
+
+# classes incluídas pelo autoload
 // include '../app/Libraries/Rota.php';
 // include '../app/Libraries/Controller.php';
 // include '../app/Libraries/Database.php';

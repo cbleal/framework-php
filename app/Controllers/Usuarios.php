@@ -111,19 +111,24 @@ class Usuarios extends Controller
                 endif;                
             # se os campos estiverem todos preenchidos, seguem para outras validações
             else :                
-                # se o email for válido
+                # se o email for inválido
                 if (Checa::checarEmail($formulario['email'])) :
                     $dados['email_erro'] = 'O email informado é inválido';
                 else :
-                    if ($this->usuarioModel->checarLogin($formulario['email'], $formulario['senha'])):
-                        echo 'Login efetuado com sucesso.';
+                    # checa os dados do usuario
+                    $usuario = $this->usuarioModel->checarLogin($formulario['email'], $formulario['senha']);
+                    # se ele existir
+                    if ($usuario):
+                        // echo '<pre>'; print_r($usuario); exit;
+                        # cria uma sessão com os seus dados
+                        $this->criarSessao($usuario);
                     else:
                         echo 'E-mail e/ou senha inválidos.';
                     endif;
                 endif;
             endif;
 
-            var_dump($formulario);
+            // var_dump($formulario);
 
         else :
             $dados = [
@@ -136,5 +141,25 @@ class Usuarios extends Controller
 
         # chama a view login passando os dados
         $this->view('usuarios/login', $dados);
+    }
+
+    //===============================================================
+    public function criarSessao($usuario)
+    {
+        $_SESSION['usuario_id'] = $usuario->id;
+        $_SESSION['usuario_nome'] = $usuario->nome;
+        $_SESSION['usuario_email'] = $usuario->email;
+    }
+
+    //===============================================================
+    public function sair()
+    {
+        unset($_SESSION['usuario_id']);
+        unset($_SESSION['usuario_nome']);
+        unset($_SESSION['usuario_email']);
+
+        session_destroy();
+
+        header('Location: '.URL);
     }
 }

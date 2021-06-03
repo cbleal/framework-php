@@ -7,7 +7,7 @@
             <div class="card-body">
                 <p class="card-text"><small class="text-muted">Informe os seus dados para fazer Login</small></p>
 
-                <form name="cadastrar" method="POST" action="" class="mt-4">
+                <form name="login" method="POST" action="<?=URL?>/usuarios/login" class="mt-4">
                     <div class="mb-2">
                         <label for="email">E-mail: <sup class="text-danger">*</sup></label>
                         <input type="text" name="email" id="email" value="<?= $dados['email'] ?>" class="form-control <?= $dados['email_erro'] ? 'is-invalid' : '' ?>">
