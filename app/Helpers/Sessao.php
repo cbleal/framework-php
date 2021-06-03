@@ -2,6 +2,7 @@
 
 class Sessao
 {
+    //===============================================================
     public static function alerta($nome, $mensagem = null, $classe = null)
     {
         # se o parametro nome não for vazio
@@ -28,6 +29,16 @@ class Sessao
                 unset($_SESSION[$nome]);
                 unset($_SESSION[$nome . 'classe']);
             endif;
+        endif;
+    }
+
+    //===============================================================
+    public static function estaLogado()
+    {
+        if (isset($_SESSION['usuario_id'])):
+           return true;
+        else:
+            return false;
         endif;
     }
 }
