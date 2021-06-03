@@ -5,6 +5,9 @@
                 <h3>Login</h3>
             </div>
             <div class="card-body">
+                <!-- apresenta uma mensagem -->
+                <?php Sessao::alerta('usuario') ?>
+                
                 <p class="card-text"><small class="text-muted">Informe os seus dados para fazer Login</small></p>
 
                 <form name="login" method="POST" action="<?=URL?>/usuarios/login" class="mt-4">
@@ -24,7 +27,7 @@
                     </div>             
 
                     <div class="row">
-                        <div class="d-grid gap-2">
+                        <div class="col-md-6 d-grid gap-2">
                             <input type="submit" value="Entrar" class="btn btn-info">
                         </div>
                         <div class="col-md-6">

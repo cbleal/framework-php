@@ -64,7 +64,7 @@ class Usuarios extends Controller
                     if ($this->usuarioModel->armazenar($dados)) :
                         echo 'Cadastrado com sucesso.<hr>';
                     else :
-                        echo 'Erro ao cadastrar.<hr>';
+                        die('Erro ao cadastrar.<hr>');
                     endif;
                 endif;
             endif;
@@ -123,7 +123,8 @@ class Usuarios extends Controller
                         # cria uma sessão com os seus dados
                         $this->criarSessao($usuario);
                     else:
-                        echo 'E-mail e/ou senha inválidos.';
+                        # cria uma sessão com a mensagem a ser exibida
+                        Sessao::alerta('usuario', 'E-mail e/ou senha inválidos', 'alert alert-danger');
                     endif;
                 endif;
             endif;
