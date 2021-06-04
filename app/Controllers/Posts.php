@@ -17,8 +17,13 @@ class Posts extends Controller
     //===============================================================
     public function index()
     {
+        # array que recebe uma lista de posts
+        $dados = [
+            'posts' => $this->postModel->lerPosts()
+        ];
+
         # mandar para a view index de posts
-        $this->view('posts/index');
+        $this->view('posts/index', $dados);
     }
 
     //===============================================================

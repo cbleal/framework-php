@@ -12,6 +12,13 @@ class Post
     }
 
     //===============================================================
+    public function lerPosts()
+    {       
+        $this->db->query("SELECT p.*, u.nome, u.email FROM posts AS p INNER JOIN usuarios AS u ON u.id = p.usuario_id");
+        return $this->db->resultados();
+    }
+
+    //===============================================================
     public function armazenar($dados)
     {
         $this->db->query("INSERT INTO posts SET usuario_id = :usuario_id, titulo = :titulo, texto = :texto");
