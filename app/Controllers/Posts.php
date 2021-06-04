@@ -12,6 +12,7 @@ class Posts extends Controller
         endif;
 
         $this->postModel = $this->model('Post');
+        $this->usuarioModel = $this->model('Usuario');
     }
 
     //===============================================================
@@ -75,5 +76,18 @@ class Posts extends Controller
 
         # chama a view cadastrar passando os dados
         $this->view('posts/cadastrar', $dados);
+    }
+
+    //===============================================================
+    public function ver($id)
+    {
+        $post = $this->postModel->lerPostPorId($id);
+        $usuario = $this->usuarioModel->lerUsuarioPorId($post->usuario_id);
+        $dados = [
+            'post' => $post,
+            'usuario' => $usuario,
+        ];
+
+        $this->view('posts/ver', $dados);
     }
 }

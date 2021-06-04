@@ -14,8 +14,16 @@ class Post
     //===============================================================
     public function lerPosts()
     {       
-        $this->db->query("SELECT p.*, u.nome, u.email FROM posts AS p INNER JOIN usuarios AS u ON u.id = p.usuario_id");
+        $this->db->query("SELECT p.*, u.nome, u.email FROM posts AS p INNER JOIN usuarios AS u ON u.id = p.usuario_id ORDER BY p.criado_em DESC");
         return $this->db->resultados();
+    }
+
+    //===============================================================
+    public function lerPostPorId($id)
+    {       
+        $this->db->query("SELECT * FROM posts WHERE id = :id");
+        $this->db->bind("id", $id);
+        return $this->db->resultado();
     }
 
     //===============================================================
