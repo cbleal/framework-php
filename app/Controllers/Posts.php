@@ -10,6 +10,8 @@ class Posts extends Controller
             # manda para a view login
             Url::redirecionar('usuarios/login');
         endif;
+
+        $this->postModel = $this->model('Post');
     }
 
     //===============================================================
@@ -30,6 +32,7 @@ class Posts extends Controller
             $dados = [
                 'titulo' => trim($formulario['titulo']),
                 'texto' => trim($formulario['texto']),
+                'usuario_id' => $_SESSION['usuario_id'],
             ];
 
             # se houver algum campo vazio no formulário
@@ -45,7 +48,12 @@ class Posts extends Controller
             # se os campos estiverem todos preenchidos, seguem para outras validações
             else :
                
-              echo 'Pode cadastrar<hr>';
+              if ($this->postModel->armazenar($dados)):
+                  Sessao::alerta('post', 'Post Cadastrado com Sucesso');
+                  Url::redirecionar('posts');
+              else:
+                  die('Erro ao escrever o Post');
+              endif;
               
             endif;
 

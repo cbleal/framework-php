@@ -1,4 +1,5 @@
 <div class="container py-5">
+    <?= Sessao::alerta('post') ?>
     <div class="card">
         <div class="card-header bg-secondary text-white">
             POSTAGENS
