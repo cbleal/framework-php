@@ -3,7 +3,7 @@
         <div class="card-header bg-secondary text-white">
             POSTAGENS
             <div class="float-end">
-                <a href="<?= URL ?>/posts/cadastrar" class="btn btn-primary">
+                <a href="<?=URL?>/posts/cadastrar" class="btn btn-primary">
                     Escrever
                 </a>
             </div>
