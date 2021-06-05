@@ -127,10 +127,20 @@ class Posts extends Controller
               
             endif;
 
-            var_dump($formulario);
+            // var_dump($formulario);
 
         else :
+            
             $post = $this->postModel->lerPostPorId($id);
+            
+            # se o id do usuairio do post for diferente do id do usuario da sessão
+            if ($post->id != $_SESSION['usurario_id']):
+                # coloca mensagem na sessão
+                Sessao::alerta('post', 'Você não tem autorização para editar este post');
+                # volta para posts
+                Url::redirecionar('posts');
+            endif;
+
             $dados = [
                 'id' => $post->id,
                 'titulo' => $post->titulo,
