@@ -6,7 +6,7 @@ class Posts extends Controller
     public function __construct()
     {
         # verificar se o usuario está logado (na sessão)
-        if (!Sessao::estaLogado()):
+        if (!Sessao::estaLogado()) :
             # manda para a view login
             Url::redirecionar('usuarios/login');
         endif;
@@ -50,17 +50,17 @@ class Posts extends Controller
                 if (empty($formulario['texto'])) :
                     $dados['texto_erro'] = 'Preencha o campo texto';
                 endif;
-                
+
             # se os campos estiverem todos preenchidos, seguem para outras validações
             else :
-               
-              if ($this->postModel->armazenar($dados)):
-                  Sessao::alerta('post', 'Post Cadastrado com Sucesso');
-                  Url::redirecionar('posts');
-              else:
-                  die('Erro ao escrever o Post');
-              endif;
-              
+
+                if ($this->postModel->armazenar($dados)) :
+                    Sessao::alerta('post', 'Post Cadastrado com Sucesso');
+                    Url::redirecionar('posts');
+                else :
+                    die('Erro ao escrever o Post');
+                endif;
+
             endif;
 
             var_dump($formulario);
@@ -114,27 +114,27 @@ class Posts extends Controller
                 if (empty($formulario['texto'])) :
                     $dados['texto_erro'] = 'Preencha o campo texto';
                 endif;
-                
+
             # se os campos estiverem todos preenchidos, seguem para outras validações
             else :
-               
-              if ($this->postModel->atualizar($dados)):
-                  Sessao::alerta('post', 'Post Atualizado com Sucesso');
-                  Url::redirecionar('posts');
-              else:
-                  die('Erro ao atualizar o Post');
-              endif;
-              
+
+                if ($this->postModel->atualizar($dados)) :
+                    Sessao::alerta('post', 'Post Atualizado com Sucesso');
+                    Url::redirecionar('posts');
+                else :
+                    die('Erro ao atualizar o Post');
+                endif;
+
             endif;
 
-            // var_dump($formulario);
+        // var_dump($formulario);
 
         else :
-            
+
             $post = $this->postModel->lerPostPorId($id);
-            
+
             # se o id do usuairio do post for diferente do id do usuario da sessão
-            if ($post->id != $_SESSION['usurario_id']):
+            if ($post->id != $_SESSION['usuario_id']) :
                 # coloca mensagem na sessão
                 Sessao::alerta('post', 'Você não tem autorização para editar este post');
                 # volta para posts
@@ -149,25 +149,42 @@ class Posts extends Controller
                 'texto_erro' => '',
             ];
         endif;
-       
+
         $this->view('posts/editar', $dados);
-    }   
-    
+    }
+
     //===============================================================
     public function deletar($id)
     {
-        # converte o parâmetro id que é string para int
-        $id = (int) $id;
+        if ($this->checarAutorizacao($id)) :
 
-        if (is_int($id)):
-            if ($this->postModel->destruir($id)):
-                # coloca mensagem na sessão
-                Sessao::alerta('post', 'Post apagado com sucesso');
-                # volta para posts
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+            $metodo = filter_input(INPUT_SERVER, 'REQUEST_METHOD', FILTER_SANITIZE_STRING);
+
+            if (is_int($id) && $metodo == 'POST') :
+                if ($this->postModel->destruir($id)) :
+                    Sessao::alerta('post', 'Post apagado com sucesso');
+                    Url::redirecionar('posts');
+                endif;
+            else :
+                Sessao::alerta('post', 'Você não tem autorização para deletar este Post', 'alert alert-danger');
                 Url::redirecionar('posts');
-            else:
-                die('Erro ao apagar o Post');
-            endif;        
+            endif;
+        else :
+            Sessao::alerta('post', 'Você não tem autorização para deletar este Post', 'alert alert-danger');
+            Url::redirecionar('posts');
+        endif;
+    }
+
+    //===============================================================
+    private function checarAutorizacao($id)
+    {
+        // $post = $this->postModel->lerPostPorId($id);
+
+        if ($id != $_SESSION['usuario_id']) :
+            return true;
+        else :
+            return false;
         endif;
     }
 }
