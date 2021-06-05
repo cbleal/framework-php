@@ -7,7 +7,7 @@
     </nav>
     <div class="card text-center my-3">
         <div class="card-header bg-secondary text-white fw-bold">
-            <?= $dados['post']->titulo ?>
+            <strong><?= $dados['post']->titulo ?></strong>
         </div>
         <div class="card-body">
             <p class="card-text"><?= $dados['post']->texto ?></p>
@@ -17,10 +17,18 @@
         </div>
 
         <?php if ($dados['post']->usuario_id === $_SESSION['usuario_id']) : ?>
-            <a href="<?= URL.'/posts/editar/'.$dados['post']->id ?>" class="btn btn-primary btn-sm my-2">Editar</a>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a href="<?= URL . '/posts/editar/' . $dados['post']->id ?>" class="btn btn-primary btn-sm my-2">Editar</a>
+                </li>
+                <li class="list-inline-item">
+                    <form action="<?= URL . '/posts/deletar/' . $dados['post']->id ?>" method="POST">
+                        <input type="submit" class="btn btn-danger btn-sm" value="Excluir">
+                    </form>
+                </li>
+            </ul>
         <?php endif; ?>
 
     </div>
-
 
 </div>
