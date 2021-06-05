@@ -90,4 +90,56 @@ class Posts extends Controller
 
         $this->view('posts/ver', $dados);
     }
+
+    //===============================================================
+    public function editar($id)
+    {
+
+        $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        if (isset($formulario)) :
+
+            $dados = [
+                'id' => $id,
+                'titulo' => trim($formulario['titulo']),
+                'texto' => trim($formulario['texto']),
+            ];
+
+            # se houver algum campo vazio no formulário
+            if (in_array("", $formulario)) :
+                # validações para campos vazios
+                if (empty($formulario['titulo'])) :
+                    $dados['titulo_erro'] = 'Preencha o campo titulo';
+                endif;
+                if (empty($formulario['texto'])) :
+                    $dados['texto_erro'] = 'Preencha o campo texto';
+                endif;
+                
+            # se os campos estiverem todos preenchidos, seguem para outras validações
+            else :
+               
+              if ($this->postModel->atualizar($dados)):
+                  Sessao::alerta('post', 'Post Atualizado com Sucesso');
+                  Url::redirecionar('posts');
+              else:
+                  die('Erro ao atualizar o Post');
+              endif;
+              
+            endif;
+
+            var_dump($formulario);
+
+        else :
+            $post = $this->postModel->lerPostPorId($id);
+            $dados = [
+                'id' => $post->id,
+                'titulo' => $post->titulo,
+                'texto' => $post->texto,
+                'titulo_erro' => '',
+                'texto_erro' => '',
+            ];
+        endif;
+       
+        $this->view('posts/editar', $dados);
+    }    
 }

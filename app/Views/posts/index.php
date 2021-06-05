@@ -17,7 +17,7 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text"><?= $post->texto ?></p>
-                        <a href="<?=URL?>/posts/ver/<?= $post->id ?>" class="btn btn-primary float-end">Ler mais</a>
+                        <a href="<?=URL.'/posts/ver/'.$post->id ?>" class="btn btn-primary float-end">Ler mais</a>
                     </div>
                     <div class="card-footer text-muted">
                         Escrito por: <?= $post->nome ?> em <?= Checa::dataBr($post->criado_em) ?>
