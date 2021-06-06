@@ -3,6 +3,7 @@
 session_start();
 
 include '../app/autoload.php';
+include '../app/phperror.php';
 include '../app/configuracao.php';
 
 # classes incluídas pelo autoload
