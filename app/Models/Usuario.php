@@ -56,6 +56,24 @@ class Usuario
     }
 
     //===============================================================
+    public function atualizar($dados)
+    {
+        $this->db->query("UPDATE usuarios SET nome = :nome, email = :email, senha = :senha, biografia = :biografia WHERE id = :id");
+
+        $this->db->bind("nome", $dados['nome']);
+        $this->db->bind("email", $dados['email']);
+        $this->db->bind("senha", $dados['senha']);
+        $this->db->bind("biografia", $dados['biografia']);
+        $this->db->bind("id", $dados['id']);
+
+        if ($this->db->executa()) :
+            return true;
+        else :
+            return false;
+        endif;
+    }
+
+    //===============================================================
     public function lerUsuarioPorId($id)
     {       
         $this->db->query("SELECT * FROM usuarios WHERE id = :id");

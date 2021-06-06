@@ -114,8 +114,7 @@ class Posts extends Controller
                 if (empty($formulario['texto'])) :
                     $dados['texto_erro'] = 'Preencha o campo texto';
                 endif;
-
-            # se os campos estiverem todos preenchidos, seguem para outras validações
+      
             else :
 
                 if ($this->postModel->atualizar($dados)) :

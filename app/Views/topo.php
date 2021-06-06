@@ -18,7 +18,8 @@
                 <?php if (isset($_SESSION['usuario_id'])) : ?>
                     <span class="navbar-text">
                         <p>Olá, <?= $_SESSION['usuario_nome'] ?>, Seja bem vindo(a)!</p>
-                        <a class="btn btn-sm btn-danger" href="<?= URL ?>/usuarios/sair" data-tooltip="tooltip" title="Sair do Sistema">Sair</a>
+                        <a class="btn btn-sm btn-danger me-2" href="<?= URL ?>/usuarios/sair" data-tooltip="tooltip" title="Sair do Sistema">Sair</a>
+                        <a class="btn btn-sm btn-primary" href="<?= URL ?>/usuarios/perfil/<?= $_SESSION['usuario_id'] ?>" data-tooltip="tooltip" title="Perfil do Usuário">Perfil</a>
                     </span>
                 <?php else : ?>
                     <span class="navbar-text">

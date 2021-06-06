@@ -90,6 +90,78 @@ class Usuarios extends Controller
     }
 
     //===============================================================
+    /* checa e edita os dados do usuário por seu ID */
+    public function perfil($id)
+    {
+        $usuario = $this->usuarioModel->lerUsuarioPorId($id);
+
+        $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+        if (isset($formulario)) :
+            $dados = [
+                'id' => $id,
+                'nome' => trim($formulario['nome']),
+                'email' => trim($formulario['email']),
+                'senha' => trim($formulario['senha']),
+                'biografia' => trim($formulario['biografia']),
+            ];           
+
+            if (in_array('', $formulario)) :
+                if (empty($formulario['nome'])) :
+                    $dados['nome_erro'] = 'Preencha o campo nome';
+                endif;
+                if (empty($formulario['email'])) :
+                    $dados['email_erro'] = 'Preencha o campo email';
+                endif;
+            else :                
+                if (Checa::checarNome($formulario['nome'])):
+                    $dados['nome_erro'] = 'O nome é inválido';
+                endif;
+                if (Checa::checarEmail($formulario['email'])):
+                    $dados['email_erro'] = 'O email é inválido';
+                endif;
+                if ($usuario->email != $formulario['email']):
+                    if ($this->usuarioModel->checarEmailExiste($formulario['email'])):
+                        $dados['email_erro'] = 'O email já existe';
+                    endif;
+                endif;
+                if (strlen($formulario['senha']) < 6):
+                    $dados['senha_erro'] = 'A senha deve ter no minimo 6 caracteres';
+                endif;
+                if ($formulario['senha'] != $usuario->senha) :               
+                    $dados['senha'] = password_hash($dados['senha'], PASSWORD_DEFAULT);
+                endif;
+            endif;
+
+            if ($this->usuarioModel->atualizar($dados)):
+                Sessao::alerta('usuario', 'Usuário atualizado com sucesso');
+            endif;          
+
+        else :
+
+            if ($usuario->id != $_SESSION['usuario_id']):
+                Sessao::mensagem('post', 'Você não tem autorização para editar esse perfil', 'alert alert-danger');
+                Url::redirecionar('posts');
+            endif;
+
+            $dados = [
+                'id' => $usuario->id,
+                'nome' => $usuario->nome,
+                'email' => $usuario->email,
+                'senha' => $usuario->senha,
+                'biografia' => $usuario->biografia,
+                'nome_erro' => '',
+                'email_erro' => '',
+                'senha_erro' => '',
+                'biografia_erro' => '',
+            ];
+
+        endif;
+
+        $this->view('usuarios/perfil', $dados);
+    }
+
+    //===============================================================
     public function login()
     {
         $formulario = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
@@ -109,9 +181,9 @@ class Usuarios extends Controller
                 endif;
                 if (empty($formulario['senha'])) :
                     $dados['senha_erro'] = 'Preencha o campo senha';
-                endif;                
+                endif;
             # se os campos estiverem todos preenchidos, seguem para outras validações
-            else :                
+            else :
                 # se o email for inválido
                 if (Checa::checarEmail($formulario['email'])) :
                     $dados['email_erro'] = 'O email informado é inválido';
@@ -119,18 +191,18 @@ class Usuarios extends Controller
                     # checa os dados do usuario
                     $usuario = $this->usuarioModel->checarLogin($formulario['email'], $formulario['senha']);
                     # se ele existir
-                    if ($usuario):
+                    if ($usuario) :
                         // echo '<pre>'; print_r($usuario); exit;
                         # cria uma sessão com os seus dados
                         $this->criarSessao($usuario);
-                    else:
+                    else :
                         # cria uma sessão com a mensagem a ser exibida
                         Sessao::alerta('usuario', 'E-mail e/ou senha inválidos', 'alert alert-danger');
                     endif;
                 endif;
             endif;
 
-            // var_dump($formulario);
+        // var_dump($formulario);
 
         else :
             $dados = [

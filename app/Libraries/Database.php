@@ -2,11 +2,11 @@
 
 class Database
 {
-    private $host = 'localhost';
-    private $porta = '3306';
-    private $banco = 'framework';
-    private $usuario = 'root';
-    private $senha = '';
+    private $host = DB['HOST'];
+    private $porta = DB['PORTA'];
+    private $banco = DB['BANCO'];
+    private $usuario = DB['USUARIO'];
+    private $senha = DB['SENHA'];
     private $dbh;
     private $stmt;
 
